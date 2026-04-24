@@ -1,69 +1,90 @@
 import streamlit as st
 import time
+import random
 
 # --- ページ設定 ---
-st.set_page_config(page_title="勉強キラリ✨", page_icon="🧸")
+st.set_page_config(page_title="勉強キラリ✨", page_icon="🍓")
 
 # デザイン調整
 st.markdown("""
     <style>
-    .stApp { background-color: #FFF9E3; }
-    h1 { color: #FF85A2; text-align: center; font-family: 'Hiragino Maru Gothic Pro', sans-serif; }
-    div.stButton > button:first-child {
-        background: linear-gradient(135deg, #FFB7B2, #FF85A2);
+    .stApp { background-color: #FFF0F5; }
+    h1 { color: #FF1493; text-align: center; font-family: 'Hiragino Maru Gothic Pro', sans-serif; text-shadow: 2px 2px #FFB6C1; }
+    .stButton > button {
+        background: linear-gradient(135deg, #FF69B4, #FF1493);
         color: white;
-        height: 80px;
+        height: 100px;
         width: 100%;
-        border-radius: 30px;
-        border: none;
-        font-size: 20px;
+        border-radius: 50px;
+        font-size: 24px;
         font-weight: bold;
-        box-shadow: 0 4px 15px rgba(255, 133, 162, 0.3);
+        border: 5px solid #FFFFFF;
+        box-shadow: 0 10px 20px rgba(0,0,0,0.1);
     }
-    .main-text { font-size: 16px; color: #666; text-align: center; margin-bottom: 20px; }
+    .message-box {
+        background-color: white;
+        padding: 20px;
+        border-radius: 20px;
+        border: 2px dashed #FF69B4;
+        text-align: center;
+        margin-bottom: 20px;
+        font-size: 18px;
+        color: #FF1493;
+    }
     </style>
     """, unsafe_allow_html=True)
 
-# --- コンテンツ ---
-st.title("✨ 勉強キラリ ✨")
-st.markdown('<p class="main-text">URLは設定済みだよ！ボタンを押すだけ🧸</p>', unsafe_allow_html=True)
+# --- 起動時の演出 ---
+st.balloons() # 開いた瞬間に風船を飛ばす！
+st.title("🍓 勉強キラリ 🍓")
 
-# 固定の講義ページURL
+# --- ランダムメッセージ ---
+messages = [
+    "今日ここを開いただけで、もう合格に一歩近づいたよ！🌸",
+    "CPAの勉強は本当に尊い。自分を誇ってね。🧸",
+    "疲れてるのにエラい！1分だけ、無心になろう。✨",
+    "今の努力は、絶対に裏切らないよ。応援してる！🍰",
+    "まずはボタンをポチッ。そこから世界が変わるよ。🔥"
+]
+st.markdown(f'<div class="message-box"><b>今日の一言：</b><br>{random.choice(messages)}</div>', unsafe_allow_html=True)
+
+# 固定URL
 FIXED_URL = "https://tlp.edulio.com/cpa/mypage/chapter/"
 
-# キャラクター
-st.markdown("<div style='text-align: center; font-size: 60px; margin-bottom: 20px;'>🌸🧸🌸</div>", unsafe_allow_html=True)
-
 # 着火ボタン
-if st.button("🔥 1分だけ全集中する"):
-    # 講義ページを開くリンク
+if st.button("🚀 講義へGO！（1分着火）"):
     st.markdown(f'''
-        <div style="text-align:center; margin-bottom:20px;">
+        <div style="text-align:center; margin-top:10px; margin-bottom:20px;">
             <a href="{FIXED_URL}" target="_blank" style="text-decoration:none;">
-                <div style="background-color: #85D8FF; color: white; padding: 20px; border-radius: 50px; font-weight: bold; font-size: 18px;">
-                    👈 ここをタップして講義ページへ！
+                <div style="background-color: #00BFFF; color: white; padding: 20px; border-radius: 50px; font-weight: bold; font-size: 20px; border: 4px solid #FFFFFF;">
+                    👇 ここをタップして講義を開く！
                 </div>
             </a>
         </div>
     ''', unsafe_allow_html=True)
     
-    # カウントダウン
+    # タイマー
     placeholder = st.empty()
     bar = st.progress(0)
-    
     for i in range(60):
         seconds_left = 60 - i
-        placeholder.markdown(f"<p style='text-align:center; font-size:24px; color:#FF85A2;'>解放まであと <b>{seconds_left}</b> 秒 ⏳</p>", unsafe_allow_html=True)
+        placeholder.markdown(f"<p style='text-align:center; font-size:24px; color:#FF1493;'>あと <b>{seconds_left}</b> 秒だけ耐えて！ ⌛</p>", unsafe_allow_html=True)
         bar.progress((i + 1) / 60)
         time.sleep(1)
         
     # 完了演出
-    st.balloons()
-    st.success("🌸 1分完走！お疲れ様！ 🌸")
+    st.snow() # 雪を降らせる
+    st.success("🌸 1分クリア！あなたは天才！ 🌸")
     
     st.markdown("---")
-    st.subheader("🎧 脳を溶かす ご褒美ASMR 🍓")
-    # お気に入りのASMR（わらび餅/キャンディ系）
-    st.video("https://www.youtube.com/watch?v=kYI9Q2U107k") 
+    st.subheader("🍓 今日のおすすめASMR 🎧")
     
-    st.write("今のあなたなら、もう少し見れちゃうかも？無理はしないでね。")
+    # ランダムASMR動画リスト
+    asmr_list = [
+        "https://www.youtube.com/watch?v=kYI9Q2U107k", # わらび餅
+        "https://www.youtube.com/watch?v=S0rK-zI4_28", # 琥珀糖
+        "https://www.youtube.com/watch?v=2vS7DqZpW1A", # フルーツキャンディ
+        "https://www.youtube.com/watch?v=6m-S2D6P2yM"  # マカロン
+    ]
+    st.video(random.choice(asmr_list))
+    st.write("脳を癒やして、リラックスしてね。")
